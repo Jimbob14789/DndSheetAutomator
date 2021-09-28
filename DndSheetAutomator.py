@@ -3,6 +3,8 @@ import random
 d4 = [1,2,3,4]
 d6 = [1,2,3,4,5,6]
 d8 = [1,2,3,4,5,6,7,8]
+d10 =[1,2,3,4,5,6,7,8,9,10]
+d12 =[1,2,3,4,5,6,7,8,9,10,11,12]
 d20 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
 #placing the deathsave variables up here is an attempted fix to not being healed above 0 during death saves loop
 deathsavesucess = 0
@@ -17,7 +19,7 @@ sheet = open('C:\\Users\\jimdo\\Downloads\\sheet.txt')
 #each line of the sheet is read in order
 for x in sheet:
     #this is used to find and separate the current level
-    if 'Monk' in x:
+    if 'Level' in x:
         levelline = x
         levelsplit = x.split(' ') 
         level = int(levelsplit[1])
@@ -37,13 +39,69 @@ for x in sheet:
         hitdiesplit = x.split('d')
         hitdie = int(hitdiesplit[1])
     #con modifier is found and separated
-    if 'Con[' in x:
+    if 'CON' in x:
         consplit = x.split(',')
         con = int(consplit[1])
     #dex modifier is found and separated
-    if 'Dex[' in x:
+    if 'DEX' in x:
         dexsplit = x.split(',')
         dex = int(dexsplit[1])
+    if 'Weapon1' in x:
+        weapon1Split = x.split(' ')
+        weapon1Name = weapon1Split[1]
+        weapon1Mod = int(weapon1Split[2])
+        weapon1DiceSplit = weapon1Split[3].split('d')
+        weapon1DiceRolled = int(weapon1DiceSplit[0])
+        weapon1DieType = weapon1DiceSplit[1]
+        if weapon1DieType == '4\n':
+            weapon1DiceType = d4[:]
+        elif weapon1DieType == '6\n':
+            weapon1DiceType = d6[:]
+        elif weapon1DieType == '8\n':
+            weapon1DiceType = d8[:]
+        elif weapon1DieType == '10\n':
+            weapon1DiceType = d10[:]
+        elif weapon1DieType == '12\n':
+            weapon1DiceType = d12[:]
+    if 'Weapon2' in x:
+        weapon2Split = x.split(' ')
+        weapon2Name = weapon2Split[1]
+        weapon2Mod = int(weapon2Split[2])
+        weapon2DiceSplit = weapon2Split[3].split('d')
+        weapon2DiceRolled = int(weapon2DiceSplit[0])
+        weapon2DieType = weapon2DiceSplit[1]
+        if weapon2DieType == '4\n':
+            weapon2DiceType = d4[:]
+        elif weapon2DieType == '6\n':
+            weapon2DiceType = d6[:]
+        elif weapon2DieType == '8\n':
+            weapon2DiceType = d8[:]
+        elif weapon2DieType == '10\n':
+            weapon2DiceType = d10[:]
+        elif weapon2DieType == '12\n':
+            weapon2DiceType = d12[:]
+    if 'WeaponRanged' in x:
+        weaponRangedSplit = x.split(' ')
+        weaponRangedName = weaponRangedSplit[1]
+        weaponRangedAmount = weaponRangedSplit[2] 
+        weaponRangedMod = int(weaponRangedSplit[3])
+        weaponRangedDiceSplit = weaponRangedSplit[4].split('d')
+        weaponRangedDiceRolled = int(weaponRangedDiceSplit[0])
+        weaponRangedDieType = weaponRangedDiceSplit[1]
+        if weaponRangedDieType == '4\n':
+            weaponRangedDiceType = d4[:]
+        elif weaponRangedDieType == '6\n':
+            weaponRangedDiceType = d6[:]
+        elif weaponRangedDieType == '8\n':
+            weaponRangedDiceType = d8[:]
+        elif weaponRangedDieType == '10\n':
+            weaponRangedDiceType = d10[:]
+        elif weaponRangedDieType == '12\n':
+            weaponRangedDiceType = d12[:]
+    if 'ProficiencyBonus' in x:
+        proficiencySplit = x.split(' ')
+        proficiency = int(proficiencySplit[1])
+    
 #when skill checks are implemented the other stats will be added here
 
 #the main loop for each funtion, when the user types done the loop is exited
@@ -115,62 +173,96 @@ while True:
         if menu == 'attack':
             #attack menu, each attack the character can do is split into a different section plus a total damage counter and a way to reset that counter
             while True:
-                attack = input("Type 'staff' for staff attack. Type 'fist' for fist. Type 'luz' for javelin. Type 'done' to return to menu. Type 'reset' to reset total damge. Type 'total' to see total damage\n")
+                attack = input("Type " + weapon1Name + " to use " + weapon1Name + ". Type " +weapon2Name+  " for "+weapon2Name+ ". Type "+weaponRangedName+" for "+weaponRangedName+". Type 'done' to return to menu. Type 'reset' to reset total damge. Type 'total' to see total damage\n")
                 if attack == 'total':
                     print('The total damage is',totaldamage)
                 if attack == 'reset':
                     totaldamage = 0
-                if attack == 'luz':
-                    attackroll = random.choice(d20)+9
-                    if attackroll - 9 == 1:
+                if attack == weaponRangedName:
+                    attackroll = random.choice(d20)+weaponRangedMod+dex+proficiency
+                    if attackroll - weaponRangedMod+dex+proficiency == 1:
                         print('Natural 1!')
                         break
                     hit = input('you rolled '+str(attackroll)+' did that hit y/n \n')
                     if hit == 'y':
-                        if attackroll - 10 == 20:
-                            damageroll = random.choice(d6)+random.choice(d6)+random.choice(d6)+5*2
+                        if attackroll - dex+proficiency+weaponRangedMod == 20:
+                            z = 0
+                            damageroll = 0
+                            while z < weaponRangedDiceRolled:
+                                damageroll = damageroll+random.choice(weaponRangedDiceType)
+                                z = z+1
+                            damageroll = damageroll+dex+weaponRangedMod
+                            damageroll = float(damageroll)*2
                             totaldamage = damageroll+totaldamage
                             print('you did',damageroll,'with a nat 20')
                         else:
-                            damageroll = random.choice(d6)+random.choice(d6)+random.choice(d6)+5
+                            damageroll = 0
+                            z=0
+                            while z < weaponRangedDiceRolled:
+                                damageroll = damageroll+random.choice(weaponRangedDiceType)
+                                z=z+1
+                            print(damageroll)
+                            damageroll = damageroll+dex+weaponRangedMod
                             totaldamage = damageroll+totaldamage
                             print('you did',damageroll,'damage')
                     elif hit == 'n':
-                        break
-                if attack == 'staff':
-                    attackroll = random.choice(d20)+10
-                    if attackroll - 10 == 1:
+                        continue
+                if attack == weapon1Name:
+                    attackroll = random.choice(d20)+dex+proficiency+weapon1Mod
+                    if attackroll - dex+weapon1Mod+proficiency == 1:
                         print('Natural 1!')
                         break
                     hit1 = input('you rolled '+str(attackroll)+' did that hit y/n \n')
                     if hit1 == 'y':
-                        if attackroll - 10 == 20:
-                            damageroll = random.choice(d8)+6*2
+                        damageroll = 0
+                        z=0
+                        if attackroll - dex+proficiency+weapon1Mod == 20:
+                            while z<weapon1DiceRolled:
+                                damageroll = random.choice(weapon1DiceType)
+                                z=z+1
+                            damageroll = damageroll+dex+weapon1Mod
+                            damageroll = float(damageroll)*2
                             totaldamage = damageroll+totaldamage
                             print('you did',damageroll,'with a nat 20')
                         else:
-                            damageroll = random.choice(d8)+6
+                            damageroll = 0
+                            z=0
+                            while z<weapon1DiceRolled:
+                                damageroll = random.choice(weapon1DiceType)
+                                z=z+1
+                            damageroll = damageroll+dex+weapon1Mod
                             totaldamage = damageroll+totaldamage
                             print('you did',damageroll,'damage')
                     elif hit1 == 'n':
-                        break
-                if attack == 'fist':
-                    attackroll = random.choice(d20)+9
-                    if attackroll - 9 == 1:
+                        continue
+                if attack == weapon2Name:
+                    attackroll = random.choice(d20)+dex+proficiency+weapon2Mod
+                    if attackroll - dex+proficiency+weapon2Mod == 1:
                         print('Natural 1!')
                         break
                     hit2 = input('you rolled '+str(attackroll)+' did that hit y/n\n')
                     if hit2 =='y':
-                        if attackroll - 9 == 20:
-                            damageroll = random.choice(d8)+5*2
+                        damageroll = 0
+                        z=0
+                        if attackroll - dex+proficiency+weapon2Mod == 20:
+                            while z<weapon2DiceRolled:
+                                damageroll = random.choice(weapon2DiceType)
+                                z=z+1
+                            damageroll = damageroll+dex+weapon2Mod
+                            damageroll = float(damageroll)*2
                             totaldamage = damageroll+totaldamage
-                            print('you did',damageroll,'damage')
+                            print('you did',damageroll,'damage with a nat 20')
                         else:
-                            damageroll = random.choice(d8)+5
+                            damageroll = 0
+                            z=0
+                            while z<weapon2DiceRolled:
+                                damageroll = random.choice(weapon2DiceType)
+                                z=z+1
+                            damageroll = damageroll+dex+weapon2Mod
                             totaldamage = damageroll+totaldamage
                             print('you did',damageroll,'damage')
                     elif hit2 == 'n':
-                        break
+                        continue
                 if attack == 'done':
                     break
         if menu == 'done':
@@ -193,5 +285,4 @@ while True:
             print('You did not level up, you still have',abs(xptonext),'more xp to go')
         break
     except:
-        print("enter a valid number numbnuts")
-
+        print("enter a valid number")
