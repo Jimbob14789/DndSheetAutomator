@@ -1,20 +1,23 @@
 Elhorn Carter
-Monk 11
+Level 11
+Class Monk
 94800 XP
 Human (m), lawful Neutral
 Noble
 [ ABILITY SCORES ]
-[b]Str[/b] 12,1
-[b]Dex[/b] 20,5
-[b]Con[/b] 16,3
-[b]Int[/b] 12,1
-[b]Wis[/b] 16,3
-[b]Cha[/b] 10,0 
+STR 12,1
+DEX 20,5
+CON 16,3
+INT 12,1
+WIS 16,3
+CHA 10,0 
+hp 89/90
+HD 1d8
 [ PROFICIENCIES ]
 
 all weapons and armor
 
-[b]Proficiency Bonus[/b] +4
+ProficiencyBonus 4
 [b]Saves[/b] Str +4, Dex +7, Int +1, Con +3
 [b]Skills[/b] Acrobatics +5, Athletics +3, History +3, Persuasion +2 (passive Perception 13)
 [b]Weapons[/b] simple weapons, quarterstaff
@@ -22,36 +25,14 @@ all weapons and armor
 [b]Tools[/b] alchemist's supplies, dragonchess set short bow, 25 arrows
 [b]Languages[/b] common, dwarvish, orc
 [ COMBAT ]
-[b]hp[/b] 89/90
-[b]HD[/b] 1d8
+
+
 [b]Init[/b] +4 ; [b]Speed[/b] 45 ft
 [b]AC[/b] 18 (without armor)
-[b]Quarterstaff(magic +1 dmg)[/b]. [i]Melee[/i] : +6 (1d8+4 bludgeoning ; versatile (1d8))
-[b]Dart 3/5[/b]. [i]Ranged[/i] : +9 (1d4+4 piercing ; finesse, thrown (range 30/120))
-lightning javelin 9/10 Ranged: +9 (3d6+9 (range 100)) luz
-[ FEATURES & TRAITS ]
-Unarmored Defense *
-Martial Arts (1d6)
-10/11 ki points
-sanctuary spell
-Position of Privilege
-[ EQUIPMENT ]
-Quarterstaff, dart (10) 1 glows for 5 feet and dimly for 10, backpack, bedroll, mess kit, tinderbox, torch (10), rations/1 day (8), waterskin, rope/hempen 50 feet, clothes/common, signet ring, scroll of pedigree, belt pouch, rat god amulet
-[b]Equipment weight[/b] 65.5 lb - [b]Cost[/b] 41.2 gp
-+5 p 236 gp 7 silver 4 copper    24.6 lbs bronze, gold ring with one ruby(bought for 2000(t))    coins worth 300 gp 1134(t) gold   200(t) gold worth of timirow silver
-[b]Coins weight[/b] 0.25 lb
-[ CHARACTER ]
-[b]Height[/b] Medium / 6'2"ft / 175 lb. ; [b]Age[/b] 36 years
-[b]Eyes[/b] Brown ; [b]Skin[/b] Tanned ; [b]Hair[/b] Dark Brown
-[b]Appearance[/b] If you do me an injury, I will crush you, ruin your name, and salt your fields.
 
-[b]Personality traits[/b] If you do me an injury, I will crush you, ruin your name, and salt your fields. I lie about almost everything, even when there's no good reason to. 
-[b]Ideals[/b] I seek more for myself but not always at the expense of others.
-[b]Bonds[/b] The common folk must see me as a hero of the people.
-[b]Flaws[/b] I too often hear veiled insults and threats in every word addressed to me, and I’m quick to anger.
-
-[b]Background[/b] Noble
-[b]Character Backstory[/b] As a young child I grew up as a wealthy noble in an influential family. I received a good education with a focus on military tactics and history. My luxurious life came to an end when my brother stole the woman I was courting and I attempted to kill him. My family exiled me to a far away land were I sought refuge in a monastery. I spent the next 15 years learning the ways of the warrior monks until I severally hurt another monk in a fit of anger during training. I now seek revenge on the monastery for their perceived wronging.
-[b]Allies & Organizations[/b] 
-
-notes:
+#To add a different weapon replace the one of the weapons with the new weapon. If it has an extra modifier for damage and to hit place that modifier after the weapon as is done with the quarterstaff, finally put amount of dice and type rolled for damage
+#if there is no 2nd weapon or no ranged weapon make weapon2 lowercase
+Weapon1 Quarterstaff 1 1d8
+Weapon2 Fist 0 1d8
+#for ranged weapons do ammo then any extra modifier then the damage
+WeaponRanged Luz 9 0 3d6
